@@ -1,0 +1,101 @@
+nav.user-nav{
+	margin-top: 0 !important;
+	top: -15px !important;
+}
+
+.login .help-block{
+	color: #ff8686;
+	background: #f9f5ea;
+    border-radius: 15px;
+}
+
+.login .help-block .success{
+    color: #f7f7f7;
+    background: #1ca922;
+    border-radius: 15px;
+}
+
+.error-foreground{
+    color: #f00;
+}
+
+.input-error{
+    border: 1px solid #f00;
+}
+
+.alert {
+    position: absolute;
+    width: 100%;
+}
+
+.jobpost-remove-logo{
+		margin-top: 5%;
+		width: 25%;
+}
+
+.progressbar-header{
+		background-color: #36c86b;
+		color: #fff;
+}
+
+.list-numbered {
+  list-style: none;
+  margin-left: 1em;
+  counter-reset: line;
+}
+
+.list-numbered > li {
+  position: relative;
+  margin-bottom: 1.5em;
+}
+
+.list-numbered > li:before {
+	position: absolute;
+	left: -2.25em;
+	display: inline-block;
+  width: 22px;
+	height: 22px;
+	margin-right: 0.5em;
+  background-color: #B53C2C;
+	border-radius: 50%;
+	color: #fff;
+	text-align:center;
+  line-height: 1.25em;
+	counter-increment: line;
+	content: counter(line);
+}
+
+.k-calendar .k-header{
+    background: #d73925;
+}
+
+.k-calendar .k-header .k-state-hover{
+    background: #fff;
+    color: #000;
+}
+
+.k-calendar .k-today,
+.k-calendar .k-today.k-state-hover{
+    background-color: #d73925;
+}
+
+.k-calendar td.k-state-selected.k-state-hover,
+.k-calendar td.k-state-selected{
+    background-color: #d73925;
+}
+
+.k-header{
+		width: 100%;
+}
+
+.k-input{
+	 font-size: 20px;
+}
+
+.blog-thumb{
+	 height: 400px;
+}
+
+.blog-text{
+	 height: 400px;
+}
