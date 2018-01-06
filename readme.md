@@ -23,3 +23,23 @@ STEPS:
 	- php artisan serve
 	or by running the public file in your xampp server
 	
+	
+To fix storage path errors:
+
+1) go to command line, key in
+	- php artisan storage:link
+2) create a symbolic link for the following:
+	blog banners
+	- windows : mklink /J .../public/storage/blogbanners .../storage/blogbanners
+	- linux/unix : ln -s .../storage/blogbanners .../public/storage/blogbanners
+	blog banners
+	- windows : mklink /J .../public/storage/blogbanners .../storage/cover_photos
+	- linux/unix : ln -s .../storage/blogbanners .../public/storage/cover_photos
+	blog banners
+	- windows : mklink /J .../public/storage/blogbanners .../storage/jobpostings
+	- linux/unix : ln -s .../storage/blogbanners .../public/storage/jobpostings
+	blog banners
+	- windows : mklink /J .../public/storage/blogbanners .../storage/profile_photos
+	- linux/unix : ln -s .../storage/blogbanners .../public/storage/profile_photos
+3) done
+	
