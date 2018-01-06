@@ -23,7 +23,7 @@
   				@foreach($blogs as $index => $blog)
   					<div class="col-lg-4 col-md-4 col-sm-6">
   						<div class="fh5co-blog animate-box">
-  							<a href="{{ route('user.blogs.single',$blog->blogid) }}"><img class="img-responsive blog-thumb" src="{{ asset('storage/blog_banners/'.$blog->thumbfname) }}" alt=""></a>
+  							<a href="{{ route('user.blogs.single',$blog->blogid) }}"><img class="img-responsive blog-thumb" src="{{ asset('storage/blogbanners/'.$blog->thumbfname) }}" alt=""></a>
   							<div class="blog-text">
   								<div class="prod-title">
   									<h3><a href="#">{{ $blog->title }}</a></h3>
