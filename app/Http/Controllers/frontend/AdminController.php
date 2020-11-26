@@ -28,6 +28,8 @@ class AdminController extends Controller
         $programservices = ProgramServices::paginate(5);
         $ngo_list = NgoList::paginate(5);
 
+        //dd($activeUsers);
+
         return view('frontend.admin.show')->with(compact('activeUsers','inactiveUsers','programservices','ngo_list'));
     }
 
