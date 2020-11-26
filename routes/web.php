@@ -36,6 +36,11 @@ Route::get('user/registration/update/{userid}', [
     'as'   => 'user.registration.update'
 ]);
 
+Route::post('user/registration/updatepayment', [
+    'uses' => 'frontend\RegistrationController@registrationUpdate',
+    'as'   => 'user.registration.updatepayment'
+]);
+
 Route::get('user/login', [
     'uses' => 'frontend\UserLoginController@show',
 		'as'   => 'user.login'
@@ -73,7 +78,17 @@ Route::group(['prefix' => 'admin'], function() {
 		Route::post('/upload-programservices', [
 				'uses' => 'frontend\AdminController@postUploadProgramServices',
 				'as'   => 'admin.programservices.post'
-		]);
+        ]);
+        
+        Route::post('/upload-ngolist', [
+            'uses' => 'frontend\AdminController@postUploadNgoList',
+            'as'   => 'admin.ngolist.post'
+        ]);
+
+        Route::post('/user-approve', [
+            'uses' => 'frontend\AdminController@userApprove',
+            'as'   => 'admin.user.approve'
+        ]);
 });
 
 Route::group(['prefix' => 'myaccount'], function () {
@@ -129,21 +144,40 @@ Route::group(['prefix' => 'myaccount'], function () {
     ]);
 });
 
+// Route::group(['prefix' => 'programs-services'], function() {
+
+//     Route::get('/', [
+//         'uses' => 'frontend\ProgramServicesController@show',
+//         'as'   => 'programs.services.show'
+//     ]);
+
+//     Route::get('/filter/{searchby}/{searchkey}', [
+//             'uses' => 'frontend\ProgramServicesController@filter',
+//             'as'   => 'programs.services.filter'
+//     ]);
+
+//     Route::get('/view', [
+//         'uses' => 'frontend\ProgramServicesController@showSingle',
+//         'as'   => 'programs.services.single'
+//     ]);
+
+// });
+
 Route::group(['prefix' => 'programs-services'], function() {
 
     Route::get('/', [
-        'uses' => 'frontend\ProgramServicesController@show',
-        'as'   => 'programs.services.show'
+        'uses' => 'frontend\NgoListController@list',
+        'as'   => 'ngolist.list'
     ]);
 
-		Route::get('/filter/{searchby}/{searchkey}', [
-				'uses' => 'frontend\ProgramServicesController@filter',
-				'as'   => 'programs.services.filter'
-		]);
+    Route::get('/filter/{searchby}/{searchkey}', [
+            'uses' => 'frontend\NgoListController@filter',
+            'as'   => 'ngolist.filter'
+    ]);
 
-    Route::get('/view', [
-        'uses' => 'frontend\ProgramServicesController@showSingle',
-        'as'   => 'programs.services.single'
+    Route::get('/view/{ngo_id}', [
+        'uses' => 'frontend\NgoListController@show',
+        'as'   => 'ngolist.show'
     ]);
 
 });

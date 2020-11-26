@@ -21,9 +21,8 @@
 
         <p class="login-box-msg">Update User Registration</p>
 
-        <form action="{{ route('user.registration.post') }}" method="post">
-        {{ csrf_field() }}
-
+        {{ Form::open(array('route' => 'user.registration.updatepayment', 'method' => 'post', 'files' => true)) }}
+            {{ csrf_field()}}
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-btn">
@@ -31,7 +30,8 @@
                             Browse… <input name="payment" type="file" id="imgInp" accept="image/x-png,image/jpeg">
                         </span>
                     </span>
-                    <input id="imgsrc" type="text" class="form-control" placeholder="Upload Payment File" readonly>
+                    <input id="imgsrc" type="text" class="form-control" placeholder="Upload Donation Proof" readonly>
+                    <input type="hidden" name="userid" value="{{ request()->route('userid') }}" />
                 </div>
                 <img id='img-upload'/>
                 <a id="removeImg" class="btn-remove hidden">Remove image</a>
@@ -40,7 +40,7 @@
             <div class="row">
                 <button type="submit" class="btn btn-primary btn-block btn-flat btn-flat-1">Update</button><!-- /.col -->
             </div>
-        </form>
+        {{ Form::close() }}
 
     </div>
 <!-- /.form-box -->

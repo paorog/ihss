@@ -31,6 +31,9 @@
                             <li role="presentation">
                                 <a href="#third" aria-controls="third" role="tab" data-toggle="tab">Programs & Services</a>
                             </li>
+                            <li role="presentation">
+                              <a href="#fourth" aria-controls="fourth" role="tab" data-toggle="tab">Ngo List</a>
+                          </li>
                         </ul>
                     </div>
 
@@ -125,6 +128,7 @@
                                         <th>Userid</th>
                                         <th>Username</th>
                                         <th>Email</th>
+                                        <th>Donation Proof</th>
                                         <td>Action</th>
                                       </tr>
                                     </thead>
@@ -137,13 +141,23 @@
                                               <td>{{ $user->userid }}</td>
                                               <td>{{ $user->username }}</td>
                                               <td>{{ $user->email }}</td>
+                                              @if($user->payment_detail)
+                                              <td><img data-toggle="modal" data-target="#view-payment-modal" data-image-name="{{ $user->payment_detail->payment_fname }}" id="view-payment" width="50" height="100" class="img-responsive" src="{{ url('/storage/user_payments/'.$user->payment_detail->payment_fname) }}"></td>
+                                              @else
+                                              <td>None</td>
+                                              @endif
                                               <td>
-                                                  <a href="" class="btn btn-sm btn-warning">
+                                                @if($user->payment_detail)
+                                                {{ Form::open(array('route' => 'admin.user.approve', 'method' => 'post')) }}
+                                                {{ csrf_field()}}
+                                                  <input type="hidden" name="userid" value="{{ $user->userid }}" />
+                                                  <button type="submit" class="btn btn-sm btn-success">
                                                       <i class="fa fa-thumbs-o-up"></i>
-                                                  </a>
-                                                  <a href="" class="btn btn-sm btn-danger">
-                                                      <i class="fa fa-thumbs-o-down"></i>
-                                                  </a>
+                                                  </button>
+                                                {{ Form::close() }}
+                                                @else
+                                                  no action
+                                                @endif
                                               </td>
                                             </tr>
                                         @endforeach
@@ -209,12 +223,143 @@
                               </table>
                             </div>
                         </div>
+                        <div role="tabpanel" class="tab-pane" id="fourth">
+                            {{ Form::open(array('route' => 'admin.ngolist.post', 'method' => 'post', 'files' => true)) }}
+                            {{ csrf_field() }}
+                                Import Excel File
+                                <button type="submit" style="float:right" class="btn btn-sm btn-success">Upload</button>
+                                (<i><strong>Note:</strong> Please follow this header ('agency','address','contact_numbers','email','fax','contact_person','conctact_person_position','registration_number','license_number','accredited_number',
+                                  'programs_and_services','service_type','clientele','locations')</i>)
+                                <hr>
+                                {!! Form::file('ngo_list', array('class' => 'form-control', 'accept' => '.csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', '')) !!}
+                            {{ Form::close() }}
+
+                            <div class="clearfix">&nbsp;</div>
+
+                            <div class="panel panel-info">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">NGO List</h3>
+                                <div class="pull-right">
+                                  <span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
+                                    <i class="glyphicon glyphicon-filter"></i>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="panel-body">
+                                <input type="text" class="form-control" id="ngo-list-filter" data-action="filter" data-filters="#ngo-list" placeholder="Filter Program & Services" />
+                              </div>
+                              <div class="table-responsive">
+                              <table class="table table-hover table-fixed" id="ngo-list">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Agency</th>
+                                    <th>Address</th>
+                                    <th>Contact Numbers</th>
+                                    <th>Email</th>
+                                    <th>Fax</th>
+                                    <th>Contact Person</th>
+                                    <th>Registration #</th>
+                                    <th>License #</th>
+                                    <th>Accredited #</th>
+                                    <th>Programs & Services</th>
+                                    <th>Service Types</th>
+                                    <th>Clientele</th>
+                                    <th>Locations</th>
+                                    <th>Created By</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @forelse($ngo_list as $row => $ngo)
+                                  
+                                  @php 
+                                  $contact_numbers = explode("|", $ngo->contact_numbers);
+                                  $email = explode("|", $ngo->email);
+                                  $fax = explode("|", $ngo->fax);
+                                  $programs_and_services = explode("|", $ngo->programs_and_services);
+                                  $service_types = explode("|", $ngo->service_types);
+                                  $clientele = explode("|", $ngo->clientele);
+                                  $locations = explode("|", $ngo->locations);
+                                  @endphp
+                                      <tr>
+                                        <td>{{ ++$row }}</td>
+                                        <td>{{ $ngo->agency }}</td>
+                                        <td>{{ $ngo->address }}</td>
+                                        <td>
+                                          @foreach($contact_numbers as $contact)
+                                          <p>{{$contact}}</p>
+                                          @endforeach
+                                        </td>
+                                        <td>
+                                          @foreach($email as $em)
+                                          <p>{{$em}}</p>
+                                          @endforeach
+                                        </td>
+                                        <td>
+                                          @foreach($fax as $fx)
+                                          <p>{{$fx}}</p>
+                                          @endforeach
+                                        </td>
+                                        <td>{{ $ngo->contact_person.' - '.$ngo->contact_person_position }}</td>
+                                        <td>{{ $ngo->registration_number }}</td>
+                                        <td>{{ $ngo->license_number }}</td>
+                                        <td>{{ $ngo->accredited_number }}</td>
+                                        <td>
+                                          @foreach($programs_and_services as $program)
+                                          <p>{{$program}}</p>
+                                          @endforeach
+                                        </td>
+                                        <td>
+                                          @foreach($service_types as $service)
+                                          <p>{{$service}}</p>
+                                          @endforeach
+                                        </td>
+                                        <td>
+                                          @foreach($clientele as $client)
+                                          <p>{{$client}}</p>
+                                          @endforeach
+                                        </td>
+                                        <td>
+                                          @foreach($locations as $location)
+                                          <p>{{$location}}</p>
+                                          @endforeach
+                                        </td>
+                                        <td></td>
+                                      </tr>
+                                  @empty
+                                      <tr><td colspan="15">Empty List</td></tr>
+                                  @endforelse
+                                </tbody>
+                              </table>
+
+                              {{ isset($ngo_list) ? $ngo_list->render() : "" }}
+                            </div>
+                        </div>
                     </div>
 
                  </div>
              </div>
          </div>
      </div>
+</div>
+
+<div class="modal fade" id="view-payment-modal" tabindex="-1" role="dialog" aria-labelledby="view-payment" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="view-payment">Donation Proof</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="img-responsive" src="" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 @section('scripts')

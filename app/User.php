@@ -44,4 +44,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\System','systemcode','status');
     }
+
+    public function payment_detail()
+    {
+        return $this->hasOne('App\UserPayment','userid','userid');
+    }
 }

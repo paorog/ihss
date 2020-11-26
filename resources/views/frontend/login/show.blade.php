@@ -76,7 +76,7 @@
 
             <div class="font-12px text-center">
                 <a href="#">I forgot my password</a><br>
-                <a href="registration.html" class="text-center">Register a new membership</a>
+                <a href="{{ route('user.registration') }}" class="text-center">Register a new membership</a>
             </div>
         </div>
     <!-- /.login-box-body -->

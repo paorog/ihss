@@ -71,7 +71,7 @@
                             Browse… <input name="payment" type="file" id="imgInp" accept="image/x-png,image/jpeg">
                         </span>
                     </span>
-                    <input id="imgsrc" type="text" class="form-control" placeholder="Upload Payment File" readonly>
+                    <input id="imgsrc" type="text" class="form-control" placeholder="Upload Donation Proof" readonly>
                 </div>
                 <img id='img-upload'/>
                 <a id="removeImg" class="btn-remove hidden">Remove image</a>

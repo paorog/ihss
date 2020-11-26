@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\User;
 use App\Userdetail;
+use App\UserPayment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -22,7 +23,7 @@ class RegistrationController extends Controller
     	//dd($input);
     	$rules = array(
     		'email' => 'required|email|unique:users',
-    		'username' => 'required|min:5|max:15|alphanum|unique:users',
+    		'username' => 'required|min:5|max:15|alphadash|unique:users',
     		'password' => 'required|min:5|max:15|alphadash',
     		'retypepass' => 'required|same:password',
     		'terms' => 'numeric|min:1',
@@ -80,5 +81,28 @@ class RegistrationController extends Controller
     {
     	$user = User::where('userid',$userid)->first();
     	return view('frontend.registration.update')->with(compact('user'));
-    }
+	}
+	
+	public function registrationUpdate(Request $request)
+	{
+		if ($request->hasFile('payment')) 
+		{
+            $photo = $request->payment;
+            $photo_file = $photo->getClientOriginalName();
+            $photo_fname = uniqid() . md5($photo_file . str_random(6)) . '.' . $photo->getClientOriginalExtension();
+			$photo->move(storage_path() . DIRECTORY_SEPARATOR . 'user_payments', $photo_fname);
+			
+			UserPayment::create(array(
+				'userid'		   => $request->userid,
+				'payment_original' => $photo_file,
+				'payment_fname'    => $photo_fname
+			));
+			
+            $updatemsg = 'user donation information is updated, please wait for an administrator to validate.';
+        
+            return redirect()->back()->with('registration_msg', $updatemsg);
+		}
+		
+		return redirect()->back()->with('registration_msg', 'failed to update user');
+	}
 }

@@ -48,3 +48,14 @@ $(function(){
 	});
 	$('[data-toggle="tooltip"]').tooltip();
 })
+
+$(function(){
+	$(document).ready(function () {
+		$('img#view-payment').on('click', function () {
+			var image = $(this).attr('src');
+			$('#view-payment-modal').on('show.bs.modal', function () {
+				$(".img-responsive").attr("src", image);
+			});
+		});
+	});
+})

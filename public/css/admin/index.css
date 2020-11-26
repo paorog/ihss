@@ -16,3 +16,8 @@ margin-left:5px;
 .panel-body{
 display: none;
 }
+
+div.table-responsive {
+  height: 500px !important;
+  overflow: scroll !important;
+}
