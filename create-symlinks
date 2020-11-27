@@ -1,0 +1,7 @@
+#!/bin/bash -ex
+
+ln -s storage/blog_banners public/storage/blog_banners
+ln -s storage/cover_photos public/storage/cover_photos
+ln -s storage/jobpostings public/storage/jobpostings
+ln -s storage/profile_photos public/storage/profile_photos
+ln -s storage/user_payments public/storage/user_payments

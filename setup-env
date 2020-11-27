@@ -1,0 +1,5 @@
+#!/bin/bash -ex
+
+cp .example.env .env
+php artisan key:generate
+php artisan config:clear

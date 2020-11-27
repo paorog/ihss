@@ -62,8 +62,7 @@ class UserAccountController extends Controller
 
         $userinfo = Userdetail::where('userid',$currentUser->userid)->first();
 
-        if(!empty($userinfo->organization))
-        {
+        if(!empty($userinfo->organization)) {
             $org_name = explode('|', $userinfo->organization);
             $org_adrs = explode('|', $userinfo->organization_adrs);
 
@@ -83,6 +82,9 @@ class UserAccountController extends Controller
                     $organization[] = array('name' => $org, 'adrs' => $adrs);
                 }
             }
+        }
+        else {
+            $organization = '';
         }
 
         $webstring = $this->randomString(5);
