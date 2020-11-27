@@ -37,9 +37,9 @@ class RegistrationController extends Controller
 		$validator = Validator::make($input, $rules, $messages);
 
 		if ($validator->fails())
-    {
-        return redirect()->back()->withErrors($validator)->withInput();
-    }
+		{
+			return redirect()->back()->withErrors($validator)->withInput();
+		}
 
         $payment = $input['payment'] == null ? 'RP001' : 'RP002';
 
@@ -48,30 +48,44 @@ class RegistrationController extends Controller
         $recentUserID = $recentUser == null ? 1 : (int)substr($recentUser->userid,6) + 1;
         $userid = $padded.sprintf('%03d',$recentUserID);
 
-    User::create(array(
-      	'userid' => $userid,
-      	'accesstype' => 'SU004',
-      	'username' => $input['username'],
-      	'email' => $input['email'],
-      	'password' => bcrypt($input['password']),
-      	'password_history' => '',
-      	'invalid_login' => 0,
-      	'login_status' => 'LS001',
-      	'payment' => $payment,
-      	'status' => 'UA002',
-      	'approverid' => ''
-  	));
+		User::create(array(
+			'userid' => $userid,
+			'accesstype' => 'SU004',
+			'username' => $input['username'],
+			'email' => $input['email'],
+			'password' => bcrypt($input['password']),
+			'password_history' => '',
+			'invalid_login' => 0,
+			'login_status' => 'LS001',
+			'payment' => $payment,
+			'status' => 'UA002',
+			'approverid' => ''
+		));
 
-    Userdetail::create(array(
-      	'userid' => $userid,
-  	));
+		Userdetail::create(array(
+			'userid' => $userid,
+		));
 
-    $regmsg = $input['payment'] == null
-    		?
-  	'Registration successfully, Please follow-up your payment to activate your account. Thank you!'
-  	:
-  	'Registration successfully, An administrator will approve your registration in less than 5 minutes. Thank you!'
-  	;
+		if ($request->hasFile('payment')) 
+		{
+            $photo = $request->payment;
+            $photo_file = $photo->getClientOriginalName();
+            $photo_fname = uniqid() . md5($photo_file . str_random(6)) . '.' . $photo->getClientOriginalExtension();
+			$photo->move(storage_path() . DIRECTORY_SEPARATOR . 'user_payments', $photo_fname);
+			
+			UserPayment::create(array(
+				'userid'		   => $userid,
+				'payment_original' => $photo_file,
+				'payment_fname'    => $photo_fname
+			));
+		}
+
+		$regmsg = $input['payment'] == null
+				?
+		'Registration successfully, Please follow-up your payment to activate your account. Thank you!'
+		:
+		'Registration successfully, An administrator will approve your registration in less than 5 minutes. Thank you!'
+		;
 
 		return redirect()->back()->with('registration_msg',$regmsg);
 

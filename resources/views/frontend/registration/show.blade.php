@@ -25,7 +25,7 @@
 
         <p class="login-box-msg">Registration</p>
 
-        <form action="{{ route('user.registration.post') }}" method="post">
+        {{ Form::open(array('route' => 'user.registration.post', 'method' => 'post', 'files' => true)) }}
         {{ csrf_field() }}
 
             <div class="form-group has-feedback">
@@ -92,7 +92,7 @@
                 </div>
 <!-- /.col -->
             </div>
-        </form>
+        {{ Form::close() }}
 
         <div class="font-12px text-center">
             <a href="{{ route('user.login') }}" class="text-center">I already have a membership</a>
