@@ -29,14 +29,18 @@ class AppServiceProvider extends ServiceProvider
                 $userinfo = Userdetail::where('userid',$currentUser->userid)->first();
 
                 $countRows = 0;
-
-                foreach($userinfo->toArray() as $info)
-                {
-                    if(empty($info))
+                
+                if(empty($userinfo->toArray())) {
+                    $countRows = 0;
+                }else {
+                    foreach($userinfo->toArray() as $info)
                     {
-                        continue;
+                        if(empty($info))
+                        {
+                            continue;
+                        }
+                        $countRows++;
                     }
-                    $countRows++;
                 }
 
                 $accountPercentage = ($countRows / count($userinfo->toArray())) * 100;

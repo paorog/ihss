@@ -376,7 +376,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="third">
                             <div class="tp-l">
-                                @if(isset($organization))
+                                @if(!empty($organization))
                                     @foreach($organization as $index => $org)
                                         <div class="tpl-inner">
                                             <h4>{{ $org['name'] }}</h4>
