@@ -58,7 +58,7 @@
                             <div class="row">
                               <div class="col-md-8 tp-l">
                                 <h3>Organization</h3>
-                                  @if(!isset($organization))
+                                  @if(empty($organization))
                                     <h4>Not Specified</h4>
                                   @else
                                     @foreach($organization as $index => $org)
