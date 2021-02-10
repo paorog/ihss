@@ -271,6 +271,24 @@ Route::group(['prefix' => 'socialwork-and-law'], function() {
 
 });
 
+Route::group(['prefix' => 'e-referral'], function(){
+
+    Route::get('/', [
+        'uses' => 'frontend\EreferralController@show',
+        'as'   => 'ereferral.show'
+    ]);
+
+    Route::get('/create', [
+        'uses' => 'frontend\EreferralController@create',
+        'as'   => 'ereferral.create'
+    ]);
+
+    Route::post('/create', [
+        'uses' => 'frontend\EreferralController@postCreate',
+        'as'   => 'ereferral.create.post'
+    ]);
+});
+
 
 // FORUM Routes
 

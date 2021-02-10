@@ -105,7 +105,7 @@
 										<a href="#" class="fh5co-sub-ddown">Services</a>
 										 <ul class="fh5co-sub-menu">
 										 	<li><a href="{{ route('ngolist.list') }}">Programs & Services</a></li>
-										 	<li><a href="#">E-Referral</a></li>
+										 	<li><a href="{{ route('ereferral.show') }}">E-Referral</a></li>
 										 	<li><a href="#">Connect to Social Services</a></li>
 										</ul>
 									</li>

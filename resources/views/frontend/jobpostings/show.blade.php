@@ -20,7 +20,7 @@
 
 <div id="fh5co-content-section" class="fh5co-section-gray">
 	<div class="container">
-		@foreach($jobposts as $post)
+		@forelse($jobposts as $post)
 		<div class="joblisting">
 			<div class="row">
 				<div class="col-sm-5">
@@ -64,7 +64,13 @@
 			</div>
 
 		</div>
-		@endforeach
+		@empty
+		<div class="joblisting">
+			<div class="row">
+				<h2>There are no job posts</h2>
+			</div>
+		</div>
+		@endforelse
 
 
 		<br>

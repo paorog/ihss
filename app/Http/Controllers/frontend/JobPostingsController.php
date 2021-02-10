@@ -20,8 +20,7 @@ class JobPostingsController extends Controller
     		return redirect()->route('user.login')->with('system_msg','Please login first before viewing job postings');
     	}
 
-      $jobposts = Jobposting::orderby('created_at','desc')->paginate(5);
-
+        $jobposts = Jobposting::orderby('created_at','desc')->paginate(5);
 
     	return view('frontend.jobpostings.show')->with(compact('jobposts'));
     }
